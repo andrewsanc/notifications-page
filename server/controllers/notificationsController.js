@@ -1,14 +1,12 @@
-const getNotifications = (req, res) => {
-  res.status(200).json([
-    {
-      id: 1,
-      type: "reacted",
-      post: "My first tournament today!",
-      user: { id: 1, name: "Mark Webber" },
-    },
-    { id: 2, type: "follow", post: null, user: { id: 2, name: "Angela Gray" } },
-  ]);
-};
+const asyncHandler = require("express-async-handler");
+
+const Notification = require("../models/notificationsModel");
+
+const getNotifications = asyncHandler(async (req, res) => {
+  const notifications = await Notification.find();
+
+  res.status(200).json(notifications);
+});
 
 module.exports = {
   getNotifications,
